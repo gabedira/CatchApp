@@ -35,6 +35,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
 
+        <activity android:name=".MakeNewRouteActivity"
+            android:exported="true">
+        </activity>
+
         <activity
             android:name=".MapsActivity"
             android:exported="true"

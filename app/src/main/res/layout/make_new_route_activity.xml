@@ -6,10 +6,10 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapsActivity" >
+    tools:context=".MakeNewRouteActivity" >
 
 <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab"
+    android:id="@+id/fabStart"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="end|bottom"
@@ -17,5 +17,19 @@
     android:layout_margin="16dp" />
 
 
+    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/End"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="End"
+        android:onClick="endHandler"
+        />
+
+    <Button xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"
+        />
 
 </fragment>
