@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.catchapp.databinding.ActivityMapsBinding;
@@ -36,6 +38,15 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.StandardOpenOption;
+import java.security.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class MakeNewRouteActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -45,15 +56,18 @@ public class MakeNewRouteActivity extends FragmentActivity implements OnMapReady
     Button Start;
     Button End;
     private FusedLocationProviderClient mLocationClient;
-
+    private String userName = "Gabriel";
+    private Ghost ghost;
     boolean isPermissionGranted;
     boolean startState;
     MapView mapView;
     //GoogleMap mGoogleMap;
 
+
     private double lat;
     private double lng;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,42 +86,79 @@ public class MakeNewRouteActivity extends FragmentActivity implements OnMapReady
 
         mLocationClient = new FusedLocationProviderClient(this);
         Start.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
-                Start.setVisibility(View.GONE);
-                Log.v("testing", "pos1");
-                getCurrLoc();
                 startState = true;
-
-                Ghost ghost = new Ghost(new LatLng(lat, lng));
-
-                final Handler handler = new Handler();
-                final int delay = 100;
-                AtomicReference<Integer> i = new AtomicReference<>();
-                i.set(0);
-
-                handler.postDelayed(new Runnable(){
-                    public void run(){
-                        if(!startState)
-                        {
-                            return;
-                        }
-                        i.set(i.get() + delay);
-                        getCurrLoc();
-                        ghost.addPoint(i.get(), new LatLng(lat, lng));
-                        handler.postDelayed(this, delay);
-                        Log.v("testing", "time: "+i+ " lat = "+lat + " lng = "+lng);
-                    }
-                }, delay);
-
+                Start.setVisibility(View.GONE);
+                startTracking();
             }
         });
 
+
+
+
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startTracking() {
+        Log.v("testing", "pos1");
+        getCurrLoc();
+        ghost = new Ghost(userName, LocalDate.now(), LocalTime.now(), new LatLng(lat, lng));
+
+        final Handler handler = new Handler();
+        final int delay = 100;
+        AtomicReference<Integer> i = new AtomicReference<>();
+        i.set(0);
+
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                if(!startState)
+                {
+                    ghost.terminate();
+                    return;
+                }
+                i.set(i.get() + delay);
+                getCurrLoc();
+                ghost.addPoint(i.get(), new LatLng(lat, lng));
+                handler.postDelayed(this, delay);
+                Log.v("testing", "time: "+ i + " lat = "+ lat + " lng = "+ lng);
+            }
+        }, delay);
+
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void endHandler(View v){
         startState = false;
         Log.v("testing", "set startState to false");
+        //MapsActivity.ghosts.add(ghost);
+
+        //FileInputStream in = null;
+        FileOutputStream fos = null;
+        Date date = new Date();
+
+        try{
+            String fileName = "CatchAppRecords/"+String.valueOf(System.currentTimeMillis());
+            File myFile = new File(fileName);
+            myFile.createNewFile();
+
+            fos = new FileOutputStream(fileName);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(ghost);
+            os.close();
+
+        } catch (Exception ex) {
+            Log.v("testing", "error pos 1");
+            ex.printStackTrace();
+        }
+
+
+        //End.setVisibility(View.GONE);
+        // TODO: Shows you stats. For now it will take you back to home page
+        Intent switchActivityIntent = new Intent(this, MapsActivity.class);
+        startActivity(switchActivityIntent);
     }
 
     private void initMap() {
@@ -200,4 +251,4 @@ public class MakeNewRouteActivity extends FragmentActivity implements OnMapReady
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-}
+        }

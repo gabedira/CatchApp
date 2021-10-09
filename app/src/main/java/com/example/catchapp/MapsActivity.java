@@ -2,7 +2,13 @@ package com.example.catchapp;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Environment;
 import android.util.Log;
 
 import android.Manifest;
@@ -18,6 +24,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.internal.constants.ListAppsActivityContract;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -36,10 +43,20 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     FloatingActionButton fab;
@@ -49,9 +66,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     MapView mapView;
     //GoogleMap mGoogleMap;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         //binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_maps);
@@ -78,6 +98,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+
     private void switchActivities() {
         Intent switchActivityIntent = new Intent(this, MakeNewRouteActivity.class);
         startActivity(switchActivityIntent);
@@ -91,7 +113,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mapFragment.getMapAsync(this);
             //mapFragment.onCreate(savedInstanceState);
         }
+    }
 
+    public void ListHandler(View v){
+        Log.v("testing", "going to list activity");
+        Intent switchActivityIntent = new Intent(this, ListOfGhosts.class);
+        startActivity(switchActivityIntent);
     }
 
     @SuppressLint("MissingPermission")
