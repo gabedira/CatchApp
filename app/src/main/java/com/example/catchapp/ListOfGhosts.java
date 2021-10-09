@@ -26,6 +26,7 @@ public class ListOfGhosts extends ListActivity {
     private ListView lv;
     public List<Ghost> ghosts;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -33,7 +34,7 @@ public class ListOfGhosts extends ListActivity {
         setContentView(R.layout.ghosts_lists);
 
         lv = (ListView) findViewById(R.id.list2);
-
+        initGhosts();
 
 
 
@@ -61,7 +62,7 @@ public class ListOfGhosts extends ListActivity {
                 checkSelfPermission(this,
                         Manifest.permission.READ_EXTERNAL_STORAGE) ==
                 PackageManager.PERMISSION_GRANTED) {
-            File file = new File(Environment.getExternalStorageDirectory()+"/CatchAppRecords");
+            File file = new File(Environment.getExternalStorageDirectory()+"/ghosts");
 
             try (FileInputStream inputStream = new FileInputStream(file)) {
                 while (inputStream.available() > 0) {

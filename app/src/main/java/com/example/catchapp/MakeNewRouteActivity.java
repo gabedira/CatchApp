@@ -137,10 +137,9 @@ public class MakeNewRouteActivity extends FragmentActivity implements OnMapReady
 
         //FileInputStream in = null;
         FileOutputStream fos = null;
-        Date date = new Date();
 
         try{
-            String fileName = "CatchAppRecords/"+String.valueOf(System.currentTimeMillis());
+            String fileName = "Documents/CatchAppRecords/"+String.valueOf(System.currentTimeMillis());
             File myFile = new File(fileName);
             myFile.createNewFile();
 
@@ -214,25 +213,29 @@ public class MakeNewRouteActivity extends FragmentActivity implements OnMapReady
 
     private void checkMyPermission()
     {
-        Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
-            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse){
-                Toast.makeText(MakeNewRouteActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                isPermissionGranted = true;
-            }
+        Dexter.
+                withContext(this).
+                withPermission(Manifest.permission.ACCESS_FINE_LOCATION).
+                withListener(new PermissionListener() {
+                    public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse){
+                        Toast.makeText(MakeNewRouteActivity.this,
+                                "Permission Granted", Toast.LENGTH_SHORT).show();
+                        isPermissionGranted = true;
+                    }
 
-            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse)
-            {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                Uri uri = Uri.fromParts("package", getPackageName(), "");
-                intent.setData(uri);
-                startActivity(intent);
-            }
+                    public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse)
+                    {
+                        Intent intent = new Intent();
+                        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), "");
+                        intent.setData(uri);
+                        startActivity(intent);
+                    }
 
-            @Override
-            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
-                permissionToken.continuePermissionRequest();
-            }
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+                        permissionToken.continuePermissionRequest();
+                    }
         }).check();
     }
 

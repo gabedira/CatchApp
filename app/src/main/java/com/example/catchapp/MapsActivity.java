@@ -91,14 +91,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
                 Log.v("testing", "verbose on start");
+                if(ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                {
+                    CreateFolder();
+                }
+                else
+                {
+                    ActivityCompat.requestPermissions(MapsActivity.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+                }
+
 
                 switchActivities();
+
+
+
+
             }
         });
 
     }
 
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
+        if(requestCode == 100 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            CreateFolder();
+        }
+        else
+        {
+            Log.v("testing", "error when requesting permissions");
+        }
+    }
+
+    private void CreateFolder(){
+        File file = new File("Documents", "Ghosts");
+        if(file.exists())
+        {
+            Log.v("testing", "Made new file");
+        }
+        else
+        {
+            Log.v("testing", "File does not exist");
+            file.mkdirs();
+            if(!file.isDirectory())
+            {
+                Log.v("testing", "error pos 3");
+            }
+        }
+    }
 
     private void switchActivities() {
         Intent switchActivityIntent = new Intent(this, MakeNewRouteActivity.class);
