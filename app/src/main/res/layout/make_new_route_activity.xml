@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,28 +9,101 @@
     android:layout_height="match_parent"
     tools:context=".MakeNewRouteActivity" >
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fabStart"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="end|bottom"
-    android:contentDescription="Hello"
-    android:layout_margin="16dp" />
+    <TableRow
+        android:paddingTop="550dp"
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Start2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:textSize="20dp"
+            android:visibility="invisible"
+            />
+
+    </TableRow>
 
 
-    <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/End"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="End"
-        android:onClick="endHandler"
-        />
+    <TableRow
+        android:paddingTop="550dp"
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/Start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        />
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/End"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End"
+            android:textSize="20dp"
+            android:visibility="invisible"
+            />
+
+
+
+
+    </TableRow>
+
+    <TableRow
+        android:paddingTop="550dp"
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/Start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Start"
+            android:visibility="visible"
+            />
+
+
+
+    </TableRow>
+
+    <TableRow
+        android:paddingTop="550dp"
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/End2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="End"
+            android:textSize="20dp"
+            android:visibility="invisible"
+            />
+
+
+    </TableRow>
+
+    <TableRow
+        android:paddingTop="50dp"
+        android:gravity="center_horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:id="@+id/TotalTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textColor="#3C3838"
+            android:textSize="30dp"
+            android:background="#4CAF50"
+            android:maxWidth="200dp"
+            />
+    </TableRow>
+
+
+
+
 
 </fragment>

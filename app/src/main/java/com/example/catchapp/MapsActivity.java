@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -59,7 +60,7 @@ import java.util.concurrent.TimeUnit;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    FloatingActionButton fab;
+    private Button fab;
     private FusedLocationProviderClient mLocationClient;
 
     boolean isPermissionGranted;
@@ -86,18 +87,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         initMap();
 
         mLocationClient = new FusedLocationProviderClient(this);
-        fab.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Log.v("testing", "verbose on start");
-
-                switchActivities();
-            }
-        });
+//        fab.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Log.v("testing", "verbose on start");
+//
+//                switchActivities();
+//            }
+//        });
 
     }
-
+    public void FabHandler(View v){
+        switchActivities();
+    }
 
 
     private void switchActivities() {
@@ -164,7 +167,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         Dexter.withContext(this).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
             public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse){
-                Toast.makeText(MapsActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MapsActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                 isPermissionGranted = true;
             }
 

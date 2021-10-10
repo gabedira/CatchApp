@@ -8,22 +8,55 @@
     android:layout_height="match_parent"
     tools:context=".MapsActivity" >
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="end|bottom"
-    android:contentDescription="Hello"
-    android:layout_margin="16dp" />
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/ghostscreen" />
 
-    <Button xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/List"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ghosts"
-        android:onClick="ListHandler"
-        />
+    <TableLayout
+        android:id="@+id/table1"
+        android:layout_gravity="bottom"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+
+        >
+
+        <TableRow
+            android:paddingTop="465dp"
+            android:gravity="center_horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
 
 
+            <Button xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/List"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ghosts"
+                android:textSize="30dp"
+                android:onClick="ListHandler"
+                android:background="#F3F6FF"
+                />
+        </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:paddingTop="40dp">
+
+        <Button xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Start"
+            android:onClick="FabHandler"
+            android:textSize="30dp"
+            android:background="#C9E265"/>
+    </TableRow>
+
+    </TableLayout>
 </fragment>
